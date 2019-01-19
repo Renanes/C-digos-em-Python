@@ -1,0 +1,38 @@
+#Local de funcionamento das operações matemáticas
+from math import sqrt
+try:
+    a = float(input("Digite o valor de a: "))
+
+    if a == 0:
+        print("Não tem como fazer a equação, a = 0")
+        exit()
+
+    b = float(input("Digite o valor de b: "))
+    c = float(input("Digite o valor de c: "))
+except ValueError:
+
+    print("Em algum termo, foi digitado um caractere que não é número. A equação não pode ser realizada.")
+    exit()
+
+
+
+
+
+
+
+delta = b**2 - 4*a*c
+
+if delta < 0:
+    print("A equação não possui raízes reais")
+    exit()
+
+elif delta == 0:
+    print("A equação possui 1 raíz real: ")
+    raiz = ((-1) * b + sqrt(delta)) /2*a
+
+else:
+    print("A equação possui 2 raízes: ")
+    raiz1 = ((-1) * b + sqrt(delta)) / (2*a)
+    raiz2 = ((-1) * b - sqrt(delta)) / (2*a)
+
+    print('''Raiz 1: {:.2f} \nRaiz 2: {:.2f}'''.format(raiz1,raiz2))
