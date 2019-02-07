@@ -1,0 +1,105 @@
+#Jogo da velha
+import os
+
+def bubble(vetor):
+    for i in range(0,len(vetor)-1):
+        for j in range(0,len(vetor)-1-i):
+            if vetor[j]>vetor[j + 1]:
+                vetor[j],vetor[j+1] = vetor[j+1],vetor[j]
+
+tabuleiro = '''  Posições
+    7 | 8 | 9
+  ---+---+---
+    4 | 5 | 6
+  ---+---+---
+    1 | 2 | 3 ''' #tabuleiro do jogo
+
+
+ganho = [
+    [1,2,3],
+    [4,5,6], #linhas
+    [7,8,9],
+    [1,4,7],#Colunas
+    [2,5,8],
+    [3,6,9],
+    [3,5,7],#diagonais
+    [1,5,9]
+    ]
+
+while True:
+    jogador1 = str(input("Digite qual seu marcador do jogo (X ou O): ")).upper().strip()
+
+    if jogador1 == 'X':
+        print("Jogador 2 fica com O")
+        jogador2 = 'O'
+        break
+
+    elif jogador1 == 'O':
+        print("Jogador 2 fica com X")
+        jogador2 = 'X'
+        break
+    else:
+        print("Digite uma das 2 alternativas!\n")
+
+
+
+
+
+
+# Regras de vitória
+jogs = [] #vetor das jogadas
+jog1 = [] #vetor do jogador1
+jog2 = [] #vetor do jogador2
+jogadas =  0 #Quantidade de jogadas
+
+while True: #Laço do gameplay
+    print(tabuleiro)
+    if jogadas == 9: #Para dar velha
+        print("Deu velha, não há vencedor aqui!")
+        break
+    try:
+        if jogadas % 2 == 0:
+
+            jogada = int(input("Digite a posição a jogar(1 - 9).Jogador {}:".format(jogador1)))
+            if jogada not in jog1:
+                jog1.append(jogada)
+        else:
+            jogada = int(input("Digite a posição a jogar(1 - 9).Jogador {}:".format(jogador2)))
+            if jogada not in jog2:
+                jog2.append(jogada)
+    except ValueError:
+        print("Digite um número por favor!")
+        continue
+
+    if jogada in jogs:
+        print("Posição já preenchida por um sinal.Tente outra posição.")
+        os.system("pause")
+
+    jogs.append(jogada)
+
+    if jogada <1 or jogada > 9: #Se jogar errado.
+        print("Posição inválida.")
+        continue
+    if str(jogada) in tabuleiro: #Substituição dos caracteres na plataforma.
+        if jogadas % 2 == 0:
+            tabuleiro = tabuleiro.replace(str(jogada),jogador1)
+            jogadas+=1
+
+
+        else:
+            tabuleiro = tabuleiro.replace(str(jogada),jogador2)
+            jogadas+=1
+
+    if jogadas>4:
+        bubble(jog1)
+        bubble(jog2)
+
+
+
+    if jog1 in ganho:
+        print('Jogador 1 Venceu!')
+        break
+
+    if jog2 in ganho:
+        print("Jogador 2 venceu!")
+        break
