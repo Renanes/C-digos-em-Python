@@ -7,6 +7,8 @@ def bubble(vetor):
             if vetor[j]>vetor[j + 1]:
                 vetor[j],vetor[j+1] = vetor[j+1],vetor[j]
 
+
+
 tabuleiro = '''  Posições
     7 | 8 | 9
   ---+---+---
@@ -25,6 +27,31 @@ ganho = [
     [3,5,7],#diagonais
     [1,5,9]
     ]
+
+def confere(vetor):
+        ac = False
+        conf = 0
+        a = 0
+        contador = 0
+        for x in ganho:
+            for y in x:
+                contador += 1
+            for c in vetor:
+                if c in x:
+                    conf += 1
+            if contador == 3 and conf != 3:
+                contador = 0
+                conf = 0
+            elif conf == 3:
+                print(x)
+                ac = True
+                break
+        return ac
+
+
+
+
+
 
 while True:
     jogador1 = str(input("Digite qual seu marcador do jogo (X ou O): ")).upper().strip()
@@ -54,9 +81,7 @@ jogadas =  0 #Quantidade de jogadas
 
 while True: #Laço do gameplay
     print(tabuleiro)
-    if jogadas == 9: #Para dar velha
-        print("Deu velha, não há vencedor aqui!")
-        break
+
     try:
         if jogadas % 2 == 0:
 
@@ -96,10 +121,20 @@ while True: #Laço do gameplay
 
 
 
-    if jog1 in ganho:
+
+    if confere(jog1) == True:
         print('Jogador 1 Venceu!')
         break
 
-    if jog2 in ganho:
+    if confere(jog2) == True:
         print("Jogador 2 venceu!")
         break
+
+
+
+    if jogadas == 9 : #Para dar velha
+        print("Deu velha, não há vencedor aqui!")
+        print(jog1)
+        break
+
+print("="*20,"\nTabuleiro campeão: \n {}".format(tabuleiro))
