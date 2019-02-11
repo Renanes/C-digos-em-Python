@@ -1,22 +1,17 @@
 #Jogo da velha
 import os
 
-def bubble(vetor):
-    for i in range(0,len(vetor)-1):
-        for j in range(0,len(vetor)-1-i):
-            if vetor[j]>vetor[j + 1]:
-                vetor[j],vetor[j+1] = vetor[j+1],vetor[j]
 
 
-
+#tabuleiro do jogo
 tabuleiro = '''  Posições
     7 | 8 | 9
   ---+---+---
     4 | 5 | 6
   ---+---+---
-    1 | 2 | 3 ''' #tabuleiro do jogo
+    1 | 2 | 3 '''
 
-
+#Sequência de números que se executados pelos jogadores, encerram o jogo com vitória.
 ganho = [
     [1,2,3],
     [4,5,6], #linhas
@@ -28,21 +23,21 @@ ganho = [
     [1,5,9]
     ]
 
+#Função para conferir o vetor do jogadores, para testificar se o jogo foi encerrado com vitória.
 def confere(vetor):
-        ac = False
-        conf = 0
-        a = 0
-        contador = 0
-        for x in ganho:
-            for y in x:
+        ac = False    #Se não há vitorioso, essa variável é mantida.
+        conf = 0      #Quando for  igual a 3, o ac vira TRUE, e assim, encerra o jogo, pois existem 3 números na jogada iguais aos vetores de vitória.
+        contador = 0     #Contador da conferência dos vetores, se conf não for == 0, o contador volta pra 0
+        for x in ganho:     #percorre o vetor ganho
+            for y in x: #percorre os vetores dentro do ganho
                 contador += 1
-            for c in vetor:
+            for c in vetor: # percorre o vetor do jogador
                 if c in x:
                     conf += 1
-            if contador == 3 and conf != 3:
+            if contador == 3 and conf != 3: #Condição para continuar percorrendo os vetores.
                 contador = 0
                 conf = 0
-            elif conf == 3:
+            elif conf == 3:#condição para encerrar a execução da função.
                 print(x)
                 ac = True
                 break
@@ -52,9 +47,10 @@ def confere(vetor):
 
 
 
+#Executando o jogo.
 
-while True:
-    jogador1 = str(input("Digite qual seu marcador do jogo (X ou O): ")).upper().strip()
+while True: #Laço de escolha dos símbolos.
+    jogador1 = str(input("Digite qual seu marcador do jogo (X ou O): ")).upper().strip() #Escolha do símbolo
 
     if jogador1 == 'X':
         print("Jogador 2 fica com O")
@@ -115,12 +111,11 @@ while True: #Laço do gameplay
             tabuleiro = tabuleiro.replace(str(jogada),jogador2)
             jogadas+=1
 
-    if jogadas>4:
-        bubble(jog1)
-        bubble(jog2)
 
 
 
+
+#Laço de conferência do jogo
 
     if confere(jog1) == True:
         print('Jogador 1 Venceu!')
